@@ -1,0 +1,17 @@
+{
+  "name": "gha-skills",
+  "description": "GitHub Actions skills for coding agents",
+  "owner": {
+    "name": "abdalkaderdev",
+    "url": "https://github.com/Abdalkaderdev"
+  },
+  "plugins": [
+    {
+      "name": "gha-skills",
+      "source": "./",
+      "description": "Workflow authoring, security hardening, caching, matrices, reusable workflows, OIDC, releases and debugging for GitHub Actions",
+      "category": "development",
+      "tags": ["github-actions", "ci"]
+    }
+  ]
+}

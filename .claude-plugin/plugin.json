@@ -1,0 +1,14 @@
+{
+  "name": "gha-skills",
+  "displayName": "GitHub Actions Skills",
+  "version": "0.1.0",
+  "description": "Skills for writing GitHub Actions workflows that are correct, fast and safe",
+  "author": {
+    "name": "abdalkaderdev",
+    "url": "https://abdalkader.dev"
+  },
+  "homepage": "https://github.com/Abdalkaderdev/gha-skills",
+  "repository": "https://github.com/Abdalkaderdev/gha-skills",
+  "license": "MIT",
+  "keywords": ["github-actions", "ci", "workflows", "oidc", "release", "agent-skills"]
+}
