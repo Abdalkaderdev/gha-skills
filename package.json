@@ -1,0 +1,19 @@
+{
+  "name": "gha-skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent Skills for writing GitHub Actions workflows that are correct, fast and safe",
+  "license": "MIT",
+  "author": "abdalkaderdev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abdalkaderdev/gha-skills.git"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}
