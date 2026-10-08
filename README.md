@@ -126,4 +126,4 @@ Issues and PRs welcome. A change should fix something an agent gets wrong in pra
 
 ## Author
 
-abdalkaderdev: [abdalkader.dev](https://abdalkader.dev) · [github.com/Abdalkaderdev](https://github.com/Abdalkaderdev)
+Abdalkader Alhamoud · [abdalkader.dev](https://abdalkader.dev) · [github.com/Abdalkaderdev](https://github.com/Abdalkaderdev)
