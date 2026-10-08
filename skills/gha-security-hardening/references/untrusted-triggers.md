@@ -22,6 +22,7 @@ jobs:
 Fixed, part 1 (`.github/workflows/test.yml`), no secrets, read-only:
 
 ```yaml
+name: test
 on: pull_request
 permissions:
   contents: read
@@ -32,10 +33,11 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+      - run: echo "${{ github.event.number }}" > pr-number.txt
       - run: npm ci && npm test | tee result.txt
         shell: bash
-      - run: echo "${{ github.event.number }}" > pr-number.txt
-      - uses: actions/upload-artifact@v7
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
         with:
           name: result
           path: |
@@ -76,6 +78,8 @@ jobs:
           gh pr comment "$pr" --body "Tests: $CONCLUSION"
 ```
 
+`workflow_run.workflows` matches the triggering workflow's `name:`, not its file name. Without `name: test` in part 1 its name is `.github/workflows/test.yml` and part 2 never fires. The upload runs on failure too, so failed runs still get a comment.
+
 The PR number file is attacker-writable, hence the regex. The test result text is never interpolated anywhere that executes.
 
 ## ChatOps command via issue_comment
@@ -97,6 +101,9 @@ jobs:
       contents: read
       deployments: write
     steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - id: pr
         env:
           GH_TOKEN: ${{ github.token }}
@@ -108,7 +115,7 @@ jobs:
         run: ./deploy-preview.sh "$SHA"
 ```
 
-Resolve the SHA once and use it everywhere after; a branch name can be force-pushed between approval and deploy. The `preview` environment should require a reviewer if the PR can come from a fork.
+The checkout is the default branch, so `deploy-preview.sh` is trusted code; it receives the PR SHA only as data. Resolve the SHA once and use it everywhere after; a branch name can be force-pushed between approval and deploy. The `preview` environment should require a reviewer if the PR can come from a fork.
 
 ## Injection in composite actions and reusable workflows
 
