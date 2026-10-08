@@ -41,7 +41,7 @@ jobs:
 
 ## Triggers that surprise
 
-- `schedule` and `workflow_dispatch` only run from the workflow file on the default branch. A new dispatch workflow on a feature branch does not show in the UI or `gh workflow run` until merged.
+- `schedule` only runs from the workflow file on the default branch. `workflow_dispatch` runs the file from the branch or tag you dispatch, but the "Run workflow" button only appears once the file is on the default branch; from the API or `gh workflow run --ref <branch>` it can be dispatched on any ref once the workflow has run at least once.
 - Scheduled workflows in public repos are disabled after 60 days without repository activity. Cron is UTC and can be delayed or dropped under load; never rely on exact timing.
 - Events caused by `GITHUB_TOKEN` (push, tag, PR, release) do not start new workflow runs, except `workflow_dispatch` and `repository_dispatch`. Use a GitHub App token when one workflow must trigger another.
 - `paths`/`paths-ignore` and `branches`/`branches-ignore`: you cannot use both forms of the same filter for one event. Use `!` negation inside `paths` instead.

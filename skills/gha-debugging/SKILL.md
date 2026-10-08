@@ -30,7 +30,7 @@ A re-run uses the same commit, the same ref and the same workflow file as the or
 
 Check in order:
 
-1. Does the trigger exist in the file on the right branch? `schedule`, `workflow_dispatch`, `workflow_run`, `pull_request_target` and `issue_comment` use the default branch's copy.
+1. Does the trigger exist in the file on the right branch? `schedule`, `workflow_run`, `pull_request_target` and `issue_comment` use the default branch's copy. `workflow_dispatch` uses the dispatched ref's copy, but the UI button needs the file on the default branch.
 2. Was the event caused by `GITHUB_TOKEN`? Those events start nothing (except `workflow_dispatch`, `repository_dispatch`).
 3. Did a `paths`, `branches` or `tags` filter exclude it? Path filters on `push` compare against the branch's previous head; on a new branch they compare against the parent of the oldest pushed commit. Diffs over 300 files are truncated, so very large pushes can miss a filter.
 4. Does the PR have merge conflicts? `pull_request` workflows do not run until conflicts are resolved; there is no merge commit to test.
