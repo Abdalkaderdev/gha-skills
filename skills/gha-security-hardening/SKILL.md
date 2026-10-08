@@ -51,7 +51,7 @@ jobs:
 Rules:
 
 - `pull_request_target`, `workflow_run` and `issue_comment` must never build, install, test or execute PR code. `npm install`, `make`, `pip install .` and pre-commit hooks all execute it.
-- `actions/checkout` (all supported majors since July 2026) refuses to check out fork PR code in `pull_request_target` and PR-triggered `workflow_run`. Do not add `allow-unsafe-pr-checkout: true` to get around it, and do not bypass it with `git fetch origin pull/N/head` or `gh pr checkout` in a `run:` step; neither is covered by the protection.
+- `actions/checkout` refuses to check out fork PR code in `pull_request_target` and PR-triggered `workflow_run`: v7, plus the floating `v4`, `v5` and `v6` tags since July 20, 2026 (v4.4.0, v5.1.0, v6.1.0). SHA, minor or patch pins to older releases have no protection; update them. Do not add `allow-unsafe-pr-checkout: true` to get around it, and do not bypass it with `git fetch origin pull/N/head` or `gh pr checkout` in a `run:` step; neither is covered by the protection.
 - To comment on or label PRs with results, split it: `pull_request` builds and uploads an artifact, a `workflow_run` job with write permission downloads it and treats every byte as untrusted data (validate numbers, never `eval`, never extract archives into the workspace root).
 - `issue_comment` commands (`/deploy`) must check `github.event.comment.author_association` is `OWNER`, `MEMBER` or `COLLABORATOR`, and must then act on a SHA, not a branch name that can move.
 - Gate deploys from untrusted triggers with an `environment` that has required reviewers.
