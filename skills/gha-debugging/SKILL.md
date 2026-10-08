@@ -41,7 +41,7 @@ Check in order:
 
 ## Job stuck in "Queued" or "Waiting"
 
-- `runs-on` label that no runner has: retired images (`ubuntu-20.04`), typos, or a self-hosted label set with no online runner. It waits up to 24 hours, then fails.
+- `runs-on` label that no runner has: retired images (`ubuntu-20.04`), typos, or a self-hosted label set with no online runner. It waits up to 24 hours, then is cancelled.
 - `concurrency` group occupied by another run. By default only one run waits per group; a newer pending run cancels the older pending one. `queue: max` lets up to 100 wait in order (not combinable with `cancel-in-progress: true`).
 - `environment` with required reviewers or a wait timer.
 - Billing: org spending limit reached on private repos.

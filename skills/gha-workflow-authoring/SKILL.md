@@ -61,7 +61,7 @@ jobs:
 
 ## Passing data
 
-- `echo "name=value" >> "$GITHUB_OUTPUT"`, read as `steps.<id>.outputs.name`. The step needs an `id`. `::set-output` is removed.
+- `echo "name=value" >> "$GITHUB_OUTPUT"`, read as `steps.<id>.outputs.name`. The step needs an `id`. `::set-output` is deprecated; do not use it.
 - Multiline values need a delimiter:
   ```bash
   { echo "notes<<EOF_NOTES"; cat notes.md; echo "EOF_NOTES"; } >> "$GITHUB_OUTPUT"

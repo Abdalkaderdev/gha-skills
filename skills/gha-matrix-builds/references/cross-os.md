@@ -30,7 +30,7 @@
 
 ## Runner differences
 
-- `macos-*` hosted runners are Apple Silicon (arm64) for current images; native modules and Docker images built for amd64 behave differently. Docker is not installed on macOS runners.
+- `macos-latest`, `macos-15` and `macos-26` are Apple Silicon (arm64); only the `-intel` and `-large` labels are x64; native modules and Docker images built for amd64 behave differently. Docker is not installed on macOS runners.
 - Windows runners are slower to start and install; put them on `pull_request` only if the project ships Windows binaries, or move them to a nightly schedule.
 - `ubuntu-24.04-arm` gives native arm64 Linux. Building arm64 images there is several times faster than QEMU emulation on x64.
 - Hosted runner minutes on Windows and macOS bill at a multiple of Linux minutes in private repos. A 3-OS by 4-version matrix on every push is usually the most expensive line in CI.

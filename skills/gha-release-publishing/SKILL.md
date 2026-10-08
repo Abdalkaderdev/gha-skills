@@ -69,7 +69,7 @@ Tag push events check out the tagged commit, but with `fetch-depth: 1` and no ot
 
 - On npmjs.com: package settings, Trusted Publisher, GitHub Actions, enter owner, repo, workflow filename (just `release.yml`) and environment name if used. All must match the run exactly.
 - The filename npm checks is the top-level (calling) workflow, even when `npm publish` runs inside a `workflow_call` workflow. Register the caller's filename, and grant `id-token: write` in both caller and called workflow.
-- Requires npm CLI 11.5.1 or newer and Node 22.14 or newer. Node 24 ships a new enough npm; on Node 22 run `npm install -g npm@latest` first.
+- Requires npm CLI 11.5.1 or newer and Node 22.14 or newer. Node 24.5.0 and later bundle npm 11.5.1 or newer; on Node 22 run `npm install -g npm@latest` first.
 - GitHub-hosted runners only; self-hosted runners cannot use trusted publishing.
 - `permissions: id-token: write`. No `NODE_AUTH_TOKEN`. Provenance is automatic only when both the repo and the package are public; a private repo publishes fine but without provenance.
 - After it works, set Settings, Publishing access to "Require two-factor authentication and disallow tokens", and revoke old automation tokens.
