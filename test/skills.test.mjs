@@ -83,6 +83,23 @@ for (const dir of skills) {
   });
 }
 
+test('workflow_run examples name a workflow defined in the same file', () => {
+  for (const dir of skills) {
+    const docs = [join(skillsDir, dir, 'SKILL.md')];
+    const refs = join(skillsDir, dir, 'references');
+    if (existsSync(refs)) docs.push(...readdirSync(refs).map((f) => join(refs, f)));
+    for (const file of docs) {
+      const src = readFileSync(file, 'utf8');
+      const names = new Set([...src.matchAll(/^name: (.+)$/gm)].map((m) => m[1].trim()));
+      for (const [, list] of src.matchAll(/workflow_run:\s*\n\s+workflows: \[([^\]]+)\]/g)) {
+        for (const wf of list.split(',').map((s) => s.trim())) {
+          assert.ok(names.has(wf), `${file}: workflow_run targets "${wf}" but no workflow has name: ${wf}`);
+        }
+      }
+    }
+  }
+});
+
 test('plugin and marketplace manifests', () => {
   const plugin = JSON.parse(readFileSync(join(root, '.claude-plugin', 'plugin.json'), 'utf8'));
   const market = JSON.parse(readFileSync(join(root, '.claude-plugin', 'marketplace.json'), 'utf8'));
