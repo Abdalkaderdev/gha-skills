@@ -51,7 +51,7 @@ With this shape, npm's trusted publisher must name the caller file, and PyPI can
 - Build in a job with `contents: read` only. Upload the artifact.
 - Publish in a separate job that downloads it, has `id-token: write`, and runs in an `environment` (e.g. `npm`, `pypi`) with required reviewers or a tag-only deployment rule.
 - No dependency caching in build or publish jobs of a release; a poisoned cache becomes a poisoned package.
-- `concurrency: { group: release, cancel-in-progress: false }` so two merges do not race on versions.
+- `concurrency: { group: release, cancel-in-progress: false, queue: max }` so two merges do not race on versions. Without `queue: max` only one run waits; a third tag push cancels the waiting one and that version is never published. actionlint 1.7.12 does not know `queue` yet and reports it as unexpected.
 
 ## Version consistency
 

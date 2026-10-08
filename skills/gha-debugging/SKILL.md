@@ -32,7 +32,7 @@ Check in order:
 
 1. Does the trigger exist in the file on the right branch? `schedule`, `workflow_run`, `pull_request_target` and `issue_comment` use the default branch's copy. `workflow_dispatch` uses the dispatched ref's copy, but the UI button needs the file on the default branch.
 2. Was the event caused by `GITHUB_TOKEN`? Those events start nothing (except `workflow_dispatch`, `repository_dispatch`).
-3. Did a `paths`, `branches` or `tags` filter exclude it? Path filters on `push` compare against the branch's previous head; on a new branch they compare against the parent of the oldest pushed commit. Diffs over 300 files are truncated, so very large pushes can miss a filter.
+3. Did a `paths`, `branches` or `tags` filter exclude it? Path filters on `push` compare against the branch's previous head; on a new branch they compare against the parent of the oldest pushed commit. If the diff has more than 3,000 files (300 on older GHES) and the matching files are not in the first 3,000, the workflow does not run; a push of more than 1,000 commits always runs.
 4. Does the PR have merge conflicts? `pull_request` workflows do not run until conflicts are resolved; there is no merge commit to test.
 5. Does the head commit message contain `[skip ci]`, `[ci skip]`, `[no ci]`, `[skip actions]`, `[actions skip]` or a `skip-checks: true` trailer? That suppresses `push` and `pull_request` runs.
 6. Fork PR from a first-time contributor? It waits for "Approve and run".
@@ -42,7 +42,7 @@ Check in order:
 ## Job stuck in "Queued" or "Waiting"
 
 - `runs-on` label that no runner has: retired images (`ubuntu-20.04`), typos, or a self-hosted label set with no online runner. It waits up to 24 hours, then fails.
-- `concurrency` group occupied by another run. Only one run waits per group; a newer pending run cancels the older pending one.
+- `concurrency` group occupied by another run. By default only one run waits per group; a newer pending run cancels the older pending one. `queue: max` lets up to 100 wait in order (not combinable with `cancel-in-progress: true`).
 - `environment` with required reviewers or a wait timer.
 - Billing: org spending limit reached on private repos.
 

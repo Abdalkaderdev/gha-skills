@@ -74,7 +74,7 @@ jobs:
           gh release edit "$GITHUB_REF_NAME" --draft=false
 ```
 
-`npm publish <tarball>` publishes exactly what was tested. For a scoped public package `--access public` is required on first publish.
+If several tags can be pushed in quick succession, add `queue: max` to the `concurrency` block; otherwise a waiting release run is cancelled by the next one. `npm publish <tarball>` publishes exactly what was tested. For a scoped public package `--access public` is required on first publish.
 
 ## PyPI
 
