@@ -72,7 +72,7 @@ jobs:
 
 Rules that bite:
 
-- A job that calls a workflow has only `uses`, `with`, `secrets`, `needs`, `if`, `permissions`, `strategy`, `concurrency`, `name`. No `steps`, no `runs-on`, no `env`, no `timeout-minutes`.
+- A job that calls a workflow has only `uses`, `with`, `secrets`, `needs`, `if`, `permissions`, `strategy`, `concurrency`, `name`, `cache-mode`. No `steps`, no `runs-on`, no `env`, no `timeout-minutes`.
 - Input types are `string`, `number`, `boolean` only. Pass lists as JSON strings and `fromJSON()` them.
 - `env` from the caller does not reach the called workflow. Pass values as inputs.
 - Secrets are not passed implicitly. `secrets: inherit` passes all of them, but only works within the same organization or enterprise, and makes it impossible to see what a workflow consumes. Prefer named secrets.

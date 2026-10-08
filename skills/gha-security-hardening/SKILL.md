@@ -75,6 +75,7 @@ Rules:
 ## 6. Caches and artifacts
 
 - Caches written on the default branch are readable by every branch and PR. A job that runs untrusted code must never be able to write a cache that privileged jobs restore. Avoid caches in release jobs entirely; build them from a clean install.
+- Default-branch runs from `pull_request_target`, `issue_comment` and `workflow_run` get read-only cache access by default. Never undo that with `cache-mode: write`; set `cache-mode: none` on release jobs (gha-caching).
 - `setup-node` and friends cache automatically in some cases; set `package-manager-cache: false` (setup-node) in release and deploy jobs.
 - Artifacts from a PR run are attacker-controlled. Download to `${{ runner.temp }}` and parse as data.
 

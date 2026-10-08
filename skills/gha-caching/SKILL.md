@@ -85,3 +85,7 @@ Consequences:
 ## Security
 
 Anything that can write a cache can poison what privileged jobs restore. Release and publish jobs build from a clean install with caching off (`package-manager-cache: false` on `setup-node`, no `cache:` input). Never save caches from `pull_request_target` or `workflow_run` jobs.
+
+On github.com, only `push`, `schedule`, `workflow_dispatch`, `repository_dispatch`, `delete`, `registry_package` and `page_build` runs can write default-branch caches. Other default-branch triggers (`pull_request_target`, `issue_comment`, `workflow_run`) get read-only access: a save logs a warning and the job continues. Use `actions/cache/restore` there and keep a `push` workflow that saves.
+
+The `cache-mode` key (workflow or job level: `read`, `write`, `write-only`, `none`) sets this explicitly. Never declare `write` on a low-trust trigger; it re-enables poisoning. `cache-mode: none` on release jobs enforces "no cache". actionlint 1.7.12 does not know the key yet and reports it as unexpected.
